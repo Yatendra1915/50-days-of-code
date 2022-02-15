@@ -10,7 +10,7 @@ class Coins{
   
     static int minCoins(int coins[],int n,int amount){
       
-        Arrays.sort(coins);
+        Arrays.sort(coins,Collections.reverseOrder());
         
         int res=0;
       
