@@ -1,42 +1,36 @@
 /*https://leetcode.com/problems/combination-sum-ii/*/
 class Solution {
-    
-    Set<List<Integer>> set=new HashSet<>();
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        
-        List<List<Integer>> list =new ArrayList<>();
-       
         Arrays.sort(candidates);
-        helper(candidates,target,0,new ArrayList<>());
+        List<List<Integer>> list = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
         
-        for(List<Integer> ls:set){
-            list.add(ls);
-        }
+        helper(candidates,target,list,temp,0);
+        
         
         return list;
     }
     
-    public void helper(int[] candidates,int target,int i,List<Integer> temp){
+    public void helper(int[] candidates, int target,List<List<Integer>> list,List<Integer> temp,int currIndex){
         
         if(target==0){
-            set.add(new ArrayList(temp));
+            list.add(new ArrayList(temp));
             return;
         }
+            
+        if(currIndex==candidates.length)
+            return;
         
-        if(i>=candidates.length)
-            return ;
-    
-        
-        if(target-candidates[i]>=0){
-            temp.add(candidates[i]);
-            helper(candidates,target-candidates[i],i+1,temp);
+        if(target-candidates[currIndex]>=0){
+            temp.add(candidates[currIndex]);
+            helper(candidates,target-candidates[currIndex],list,temp,currIndex+1);
             temp.remove(temp.size()-1);
+            
         }
         
-        while(i+1 < candidates.length && candidates[i]==candidates[i+1]) {
-           i++;     
-       }
+        while(currIndex<candidates.length-1 && candidates[currIndex+1]==candidates[currIndex])
+            currIndex++;
+        helper(candidates,target,list,temp,currIndex+1);
         
-        helper(candidates,target,i+1,temp);
     }
 }
